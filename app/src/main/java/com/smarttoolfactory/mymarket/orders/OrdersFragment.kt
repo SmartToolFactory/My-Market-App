@@ -1,47 +1,40 @@
 package com.smarttoolfactory.mymarket.orders
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.smarttoolfactory.mymarket.R
+import com.smarttoolfactory.mymarket.base.BaseFragment
 import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import com.smarttoolfactory.mymarket.login.LoginFragment
 
-class OrdersFragment : DaggerFragment() {
+class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
+    private lateinit var ordersViewModel: OrdersViewModel
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private lateinit var taskListViewModel: OrdersViewModel
-
-    private lateinit var dataBinding: FragmentOrdersBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        taskListViewModel =
+        ordersViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
 
+        dataBinding?.viewModel = ordersViewModel
+    }
 
-        dataBinding =
-            DataBindingUtil.inflate<FragmentOrdersBinding>(
-                inflater,
-                R.layout.fragment_orders,
-                container,
-                false
-            )
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_orders
+    }
 
-        return dataBinding.root
+    companion object {
 
+        fun newInstance(): OrdersFragment {
+
+            val args = Bundle()
+
+            val fragment = OrdersFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
 }

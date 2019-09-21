@@ -15,11 +15,11 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentContributorModule {
 
-    @FragmentScope
+//    @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeLoginFragment(): LoginFragment
 
-    @FragmentScope
+//    @FragmentScope
     @ContributesAndroidInjector
     abstract fun contributeOrdersFragment(): OrdersFragment
 }
