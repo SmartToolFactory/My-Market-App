@@ -1,4 +1,4 @@
-package com.smarttoolfactory.mymarket.login
+package com.smarttoolfactory.mymarket.orders
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.smarttoolfactory.mymarket.R
-import com.smarttoolfactory.mymarket.databinding.FragmentLoginBinding
+import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+class OrdersFragment : DaggerFragment() {
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var taskListViewModel: OrdersViewModel
 
-    private lateinit var dataBinding: FragmentLoginBinding
+    private lateinit var dataBinding: FragmentOrdersBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,14 +28,14 @@ class LoginFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        loginViewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
+        taskListViewModel =
+            ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
 
 
         dataBinding =
-            DataBindingUtil.inflate<FragmentLoginBinding>(
+            DataBindingUtil.inflate<FragmentOrdersBinding>(
                 inflater,
-                R.layout.fragment_login,
+                R.layout.fragment_orders,
                 container,
                 false
             )

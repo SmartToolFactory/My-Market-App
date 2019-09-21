@@ -1,9 +1,11 @@
 package com.smarttoolfactory.mymarket
 
-import android.app.Application
+import com.smarttoolfactory.mymarket.di.DaggerAppComponent
 import com.squareup.leakcanary.LeakCanary
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 
-class MyApplication : Application() {
+class MyApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -18,5 +20,9 @@ class MyApplication : Application() {
 
     }
 
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().application(this).build()
+    }
 
 }
