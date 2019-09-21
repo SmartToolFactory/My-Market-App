@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.smarttoolfactory.mymarket.databinding.ActivityMainBinding
 import com.smarttoolfactory.mymarket.login.LoginFragment
 import com.smarttoolfactory.mymarket.login.LoginViewModel
-import com.smarttoolfactory.mymarket.orders.OrdersFragment
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -20,7 +19,7 @@ class MainActivity : DaggerAppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
 
     /**
-     * Data-binding for this activity
+     * Data-binding for this Activity
      */
     private lateinit var dataBinding: ActivityMainBinding
 
@@ -34,7 +33,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         bindViews()
 
-        subscribeLogin()
+        subscribeLoginState()
     }
 
     /**
@@ -61,24 +60,17 @@ class MainActivity : DaggerAppCompatActivity() {
 
 
     /**
-     * Listen login-register process, if
+     * Listen Authentication Status of the User
      */
-    private fun subscribeLogin() {
+    private fun subscribeLoginState() {
 
-        loginViewModel.login.observe(this, Observer {
-            it?.takeIf {
-                true
-            }.run {
+        loginViewModel.authenticationState.observe(this, Observer {
 
-                // Set up Fragment
-                val currentFragment = OrdersFragment.newInstance()
-
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.content_frame, currentFragment)
-                    .commit()
-
-            }
+//            when (it) {
+//                LoginViewModel.AuthenticationState.AUTHENTICATED -> TODO()
+//                LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> TODO()
+//                LoginViewModel.AuthenticationState.UNAUTHENTICATED -> TODO()
+//            }
         })
     }
 }
