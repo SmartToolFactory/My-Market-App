@@ -19,31 +19,34 @@
             android:id="@+id/tvMarket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
             android:text="@string/my_market"
             android:textColor="@color/primary"
+            android:singleLine="true"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.22" />
+            app:layout_constraintVertical_bias="0.15" />
 
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etUserName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:background="@drawable/round_rect_border"
-            android:drawableStart="@drawable/ic_lock_24dp"
+            android:drawableStart="@drawable/ic_perm_identity_24dp"
             android:drawablePadding="4dp"
             android:hint="@string/user_name"
+            android:singleLine="true"
             android:paddingStart="8dp"
             android:paddingLeft="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45"
             app:layout_constraintWidth_percent=".80" />
 
 
