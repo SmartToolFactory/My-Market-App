@@ -4,22 +4,31 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
 import com.smarttoolfactory.mymarket.data.model.Order
 import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
+import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
 import com.smarttoolfactory.mymarket.view.adapter.OrderListAdapter
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
     private lateinit var ordersViewModel: OrdersViewModel
 
+    private lateinit var loginViewModel: LoginViewModel
+
     private lateinit var orderListAdapter: OrderListAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // LoginViewModel is reqired to log out when user touches log out button
+        loginViewModel =
+            ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
+
 
         ordersViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
@@ -28,6 +37,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // Set RecyclerView layout manager, and adapter
         orderListAdapter = OrderListAdapter(ordersViewModel)
+
         val linearLayoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
@@ -41,6 +51,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         subscribeExpandList()
 
     }
+
 
 
     /**

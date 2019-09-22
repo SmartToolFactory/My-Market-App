@@ -2,8 +2,11 @@ package com.smarttoolfactory.mymarket.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.smarttoolfactory.mymarket.ui.orders.OrdersFragment
+import com.smarttoolfactory.mymarket.domain.LoginUseCase
 import com.smarttoolfactory.mymarket.utils.SingleLiveEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -12,7 +15,9 @@ import javax.inject.Inject
  *
  * "ViewModel cannot be provided without an @Inject constructor or an @Provides-annotated method" exception occurs otherwise.
  */
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+) : ViewModel() {
 
     enum class AuthenticationState {
         /**
@@ -23,14 +28,24 @@ class LoginViewModel @Inject constructor() : ViewModel() {
          * The user has authenticated successfully
          */
         AUTHENTICATED,
+
+        /**
+         *
+         */
+        EMPTY_FIELDS,
         /**
          * Authentication failed
          */
-        INVALID_AUTHENTICATION
+        INVALID_AUTHENTICATION,
+        /**
+         * User logged out
+         */
+        LOGGED_OUT
     }
 
+    private val disposables = CompositeDisposable()
 
-    val authenticationState = MutableLiveData<AuthenticationState>()
+    val authenticationState = SingleLiveEvent<AuthenticationState>()
 
     var userName = MutableLiveData<String>()
     var userPassword = MutableLiveData<String>()
@@ -38,38 +53,41 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     /**
      * Remember users selection
      */
-    var rememberMe = SingleLiveEvent<Boolean>()
+    var rememberMe = MutableLiveData<Boolean>()
 
-    /**
-     * Event to go [OrdersFragment]. When triggered changes fragment
-     */
-    var goToOrderScreen = SingleLiveEvent<Boolean>()
-
-
-    var username: String
 
     init {
         // User is always unauthenticated when MainActivity is launched
         authenticationState.value = AuthenticationState.UNAUTHENTICATED
-        username = ""
+
     }
 
-    fun refuseAuthentication() {
+    private fun refuseAuthentication() {
         authenticationState.value = AuthenticationState.UNAUTHENTICATED
     }
 
-    fun authenticate(username: String, password: String) {
-        if (passwordIsValidForUsername(username, password)) {
-            this.username = username
-            authenticationState.value = AuthenticationState.AUTHENTICATED
-        } else {
-            authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
-        }
+    /**
+     * Check for user name and password authentication
+     */
+    fun authenticate() {
+        val disposable = loginUseCase.logIn(userName.value, userPassword.value, rememberMe.value)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                authenticationState.value = it
+            },
+                {
+                    authenticationState.value = AuthenticationState.UNAUTHENTICATED
+                })
+
+
+        disposables.add(disposable)
+
     }
 
-    // TODO HAVE REAL Authentication
-    private fun passwordIsValidForUsername(username: String, password: String): Boolean {
-        return true
+    fun logOut() {
+        loginUseCase.logOut()
     }
+
 
 }

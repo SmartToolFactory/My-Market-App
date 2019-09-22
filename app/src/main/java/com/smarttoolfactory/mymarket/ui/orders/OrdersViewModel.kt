@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.smarttoolfactory.mymarket.data.model.OrderListItem
 import com.smarttoolfactory.mymarket.domain.GetOrderListUseCase
+import com.smarttoolfactory.mymarket.utils.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -36,7 +37,8 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
     /**
      * Position of item touched by user to expand or shrink
      */
-    val expandPosition: MutableLiveData<Int> = MutableLiveData()
+    val expandPosition: SingleLiveEvent<Int> = SingleLiveEvent()
+
 
     init {
 
@@ -66,6 +68,8 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
         expandPosition.value = orderListItem.id
     }
+
+
 
     override fun onCleared() {
         super.onCleared()

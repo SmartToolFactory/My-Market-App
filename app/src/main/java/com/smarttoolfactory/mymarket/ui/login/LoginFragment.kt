@@ -22,6 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         dataBinding.viewModel = loginViewModel
 
         dataBinding.buttonLogIn.setOnClickListener() {
+
             findNavController().navigate(R.id.action_loginFragment_to_ordersFragment)
 
         }
