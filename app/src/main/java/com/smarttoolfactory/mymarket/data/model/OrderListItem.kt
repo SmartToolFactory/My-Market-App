@@ -12,8 +12,9 @@ class OrderListItem(orderList: Order) {
 
     var date: String? = orderList.date
     var month: String? = orderList.month
-    var state: String = STATE_WAITING_CONFIRMATION
+    var state: String? = orderList.productState
     var order: Order? = orderList
+    var isExpanded: Boolean = false
     var id = 0
 
     init {

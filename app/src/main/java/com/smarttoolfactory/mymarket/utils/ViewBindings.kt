@@ -9,6 +9,9 @@ import com.smarttoolfactory.mymarket.constants.*
 import com.smarttoolfactory.mymarket.data.model.OrderListItem
 import com.smarttoolfactory.mymarket.view.adapter.OrderListAdapter
 
+/*
+    *** Bindings for RecyclerView ***
+ */
 
 /**
  * [BindingAdapter]s for the [OrderListItem]s to ListAdapter.
@@ -18,6 +21,12 @@ fun RecyclerView.setItems(items: List<OrderListItem>?) {
     items?.let {
         (adapter as OrderListAdapter)?.submitList(items)
     }
+}
+
+
+@BindingAdapter("app:expand")
+fun RecyclerView.setExpandedItem(item: Int) {
+    adapter?.notifyItemChanged(item)
 }
 
 /*
@@ -34,7 +43,9 @@ fun View.setState(state: String) {
     setBackgroundColor(Color.parseColor(colorString))
 }
 
-
+/*
+    *** Bindings for AppCompatTextView ***
+ */
 /**
  * [BindingAdapter]s for the [OrderListItem]s to set state text.
  */

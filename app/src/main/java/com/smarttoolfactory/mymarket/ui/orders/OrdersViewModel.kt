@@ -33,6 +33,9 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
      */
     val items: LiveData<List<OrderListItem>> = _orderList
 
+    /**
+     * Position of item touched by user to expand or shrink
+     */
     val expandPosition: MutableLiveData<Int> = MutableLiveData()
 
     init {
@@ -59,11 +62,7 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
      */
     fun showProductDetails(orderListItem: OrderListItem) {
 
-       var display = orderListItem.order?.isExpanded
-
-        display = (display == false)
-
-        orderListItem.order?.isExpanded = display
+        orderListItem.isExpanded = (!orderListItem.isExpanded)
 
         expandPosition.value = orderListItem.id
     }

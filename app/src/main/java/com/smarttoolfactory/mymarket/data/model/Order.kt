@@ -36,9 +36,8 @@ data class Order(
     var productState: String? = null,
     @SerializedName("productDetail")
     @Expose
-    var productDetail: ProductDetail? = null,
-    @Ignore
-    var isExpanded: Boolean = false
+    var productDetail: ProductDetail? = null
+
 
 )
 
