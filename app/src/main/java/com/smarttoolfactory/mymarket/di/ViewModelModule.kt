@@ -3,8 +3,8 @@ package com.smarttoolfactory.mymarket.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.smarttoolfactory.mymarket.login.LoginViewModel
-import com.smarttoolfactory.mymarket.orders.OrdersViewModel
+import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
+import com.smarttoolfactory.mymarket.ui.orders.OrdersViewModel
 import com.smarttoolfactory.mymarket.viewmodel.CustomViewModelFactory
 import dagger.Binds
 import dagger.Module

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.smarttoolfactory.mymarket.orders.OrdersViewModel" />
+            type="com.smarttoolfactory.mymarket.ui.orders.OrdersViewModel" />
 
     </data>
 
@@ -14,18 +15,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvOrders"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Orders"
-            android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonMyOrders"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:scrollbars="horizontal"
+            app:items="@{viewModel.items}"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonMyOrders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/round_rect_border_red"
+            android:text="@string/my_orders"
+            android:textAllCaps="false"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonLogOut"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent=".40" />
 
-        
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonLogOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_rect_solid_red"
+            android:text="@string/logout"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonMyOrders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonMyOrders"
+            app:layout_constraintWidth_percent=".40" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

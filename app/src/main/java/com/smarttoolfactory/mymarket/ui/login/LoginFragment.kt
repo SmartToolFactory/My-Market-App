@@ -1,4 +1,4 @@
-package com.smarttoolfactory.mymarket.login
+package com.smarttoolfactory.mymarket.ui.login
 
 import android.os.Bundle
 import android.view.View
@@ -19,15 +19,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         loginViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
 
-        dataBinding?.viewModel = loginViewModel
+        dataBinding.viewModel = loginViewModel
 
-        dataBinding!!.buttonLogin!!.setOnClickListener() {
+        dataBinding.buttonLogIn.setOnClickListener() {
             findNavController().navigate(R.id.action_loginFragment_to_ordersFragment)
 
         }
 
     }
-
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_login

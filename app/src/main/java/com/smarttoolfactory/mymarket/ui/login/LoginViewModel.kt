@@ -1,10 +1,9 @@
-package com.smarttoolfactory.mymarket.login
+package com.smarttoolfactory.mymarket.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.smarttoolfactory.mymarket.orders.OrdersFragment
+import com.smarttoolfactory.mymarket.ui.orders.OrdersFragment
 import com.smarttoolfactory.mymarket.utils.SingleLiveEvent
-import io.reactivex.Single
 import javax.inject.Inject
 
 

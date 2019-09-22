@@ -13,17 +13,17 @@ class OrdersRepositoryImpl @Inject constructor(
     private val webService: OrdersDataSource
 ) :
     OrdersRepository {
-    override fun getOrdersList(): Observable<List<Order>> {
+    override fun getOrderList(): Observable<List<Order>> {
         return webService.getOrderList()
     }
 
 
     // TODO Implement database features
-    override fun saveOrdersListToDb() {
+    override fun saveOrderListToDb() {
 
     }
 
-    override fun clearOrdersListFromDb() {
+    override fun clearOrderListFromDb() {
 
     }
 

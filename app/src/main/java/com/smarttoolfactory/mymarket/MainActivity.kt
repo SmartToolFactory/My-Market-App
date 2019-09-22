@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.smarttoolfactory.mymarket.api.OrdersApi
 import com.smarttoolfactory.mymarket.databinding.ActivityMainBinding
-import com.smarttoolfactory.mymarket.login.LoginViewModel
+import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
 import dagger.android.support.DaggerAppCompatActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.lang.Exception
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {

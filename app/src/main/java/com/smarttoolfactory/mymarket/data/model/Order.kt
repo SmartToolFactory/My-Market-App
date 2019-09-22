@@ -1,11 +1,10 @@
 package com.smarttoolfactory.mymarket.data.model
 
-import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 
 /**
@@ -13,10 +12,9 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Entity(tableName = "orders")
-@Parcelize
 data class Order(
 
-    @PrimaryKey val key: Int = 0,
+    @PrimaryKey val id: Int = 0,
 
     @SerializedName("date")
     @Expose
@@ -38,6 +36,9 @@ data class Order(
     var productState: String? = null,
     @SerializedName("productDetail")
     @Expose
-    var productDetail: ProductDetail? = null
+    var productDetail: ProductDetail? = null,
+    @Ignore
+    var isExpanded: Boolean = false
 
-) : Parcelable
+)
+

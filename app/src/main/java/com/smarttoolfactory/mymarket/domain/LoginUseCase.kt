@@ -7,6 +7,8 @@ import com.smarttoolfactory.mymarket.base.BaseUseCase
  */
 class LoginUseCase : BaseUseCase() {
 
+
+
     override fun dispose() {
 
     }

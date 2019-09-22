@@ -1,9 +1,9 @@
-package com.smarttoolfactory.mymarket.orders
+package com.smarttoolfactory.mymarket.ui.orders
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.smarttoolfactory.mymarket.data.model.Order
-import com.smarttoolfactory.mymarket.domain.GetOrdersUseCase
+import com.smarttoolfactory.mymarket.domain.GetOrderListUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,26 +15,33 @@ import javax.inject.Inject
  *
  * "ViewModel cannot be provided without an @Inject constructor or an @Provides-annotated method" exception occurs otherwise.
  */
-class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrdersUseCase) :
+class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrderListUseCase) :
     ViewModel() {
 
 
     private val disposables = CompositeDisposable()
 
-    private val _ordersList = MutableLiveData<List<Order>>()
-    val ordersList = _ordersList
+    private val _orderList = MutableLiveData<List<Order>>()
+
+    /**
+     * Live data that contains order and does not expose _orderList to UI.
+     * This liveData is also used for data-binding with list via
+     * app:items= of RecyclerViewBinding
+     *
+     */
+    val items = _orderList
 
     init {
-        getOrdersList()
+        getOrderList()
     }
 
-    fun getOrdersList() {
+    private fun getOrderList() {
 
-        val disposable = getOrdersUseCase.getOrdersList()
+        val disposable = getOrdersUseCase.getOrderList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                ordersList.value = it
+                items.value = it
             }
 
         disposables.add(disposable)
