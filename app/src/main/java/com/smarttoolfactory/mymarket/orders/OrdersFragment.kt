@@ -2,24 +2,17 @@ package com.smarttoolfactory.mymarket.orders
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
+import com.smarttoolfactory.mymarket.data.model.Order
 import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
-import com.smarttoolfactory.mymarket.login.LoginFragment
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
     private lateinit var ordersViewModel: OrdersViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,8 +20,33 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         ordersViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
 
-        dataBinding?.viewModel = ordersViewModel
+        dataBinding.viewModel = ordersViewModel
+
+        subscribeOrdersList()
     }
+
+
+    /**
+     * Listen changes of [Order]s list of ViewModel. When there are orders display them via [RecyclerView]
+     */
+    private fun subscribeOrdersList() {
+
+        ordersViewModel.ordersList.observe(this, Observer {
+            it?.apply {
+
+                // TODO Create RecyclerView Adapter do display items
+                val sb = StringBuilder()
+
+                forEach {
+                    sb.append("${it.orderName}\n")
+                }
+
+                dataBinding.tvOrders.text = sb.toString()
+
+            }
+        })
+    }
+
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_orders

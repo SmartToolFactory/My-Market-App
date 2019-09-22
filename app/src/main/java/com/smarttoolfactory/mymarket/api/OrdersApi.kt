@@ -2,11 +2,10 @@ package com.smarttoolfactory.mymarket.api
 
 import com.smarttoolfactory.mymarket.data.model.Order
 import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.http.GET
 
 /**
- * Retrofit interface to get Order list from REST api
+ * Retrofit interface to get [Order] list from REST api
  */
 interface OrdersApi {
 

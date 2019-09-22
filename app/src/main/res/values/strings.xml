@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">My Market App</string>
+    <string name="app_name">MARKETİM</string>
     <string name="user_name">Kullanıcı Adı</string>
-    <string name="my_market">MARKETİM</string>
     <string name="password">Şifre</string>
     <string name="remember_me">Beni Hatırla</string>
     <string name="login">Giriş</string>

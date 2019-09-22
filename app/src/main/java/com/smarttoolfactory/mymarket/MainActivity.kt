@@ -41,14 +41,6 @@ class MainActivity : DaggerAppCompatActivity() {
 
         subscribeLoginState()
 
-
-        val disposable = ordersApi.getOrderList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                println("🎃 List $it")
-            }
-
     }
 
     /**
