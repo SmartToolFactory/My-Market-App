@@ -29,7 +29,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // Set RecyclerView layout manager, adapter, and scroll listener for infinite scrolling
         val linearLayoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         dataBinding.recyclerView.apply {
             this.layoutManager = linearLayoutManager

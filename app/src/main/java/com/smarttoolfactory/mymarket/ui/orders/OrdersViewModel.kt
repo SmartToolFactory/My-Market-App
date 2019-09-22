@@ -1,8 +1,9 @@
 package com.smarttoolfactory.mymarket.ui.orders
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.smarttoolfactory.mymarket.data.model.Order
+import com.smarttoolfactory.mymarket.data.model.OrderListItem
 import com.smarttoolfactory.mymarket.domain.GetOrderListUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +22,7 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
     private val disposables = CompositeDisposable()
 
-    private val _orderList = MutableLiveData<List<Order>>()
+    private val _orderList = MutableLiveData<List<OrderListItem>>()
 
     /**
      * Live data that contains order and does not expose _orderList to UI.
@@ -29,7 +30,7 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
      * app:items= of RecyclerViewBinding
      *
      */
-    val items = _orderList
+    val items: LiveData<List<OrderListItem>> = _orderList
 
     init {
         getOrderList()
@@ -37,11 +38,12 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
     private fun getOrderList() {
 
-        val disposable = getOrdersUseCase.getOrderList()
+        val disposable = getOrdersUseCase.getOrderItemList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                items.value = it
+                    _orderList.value = it
+
             }
 
         disposables.add(disposable)

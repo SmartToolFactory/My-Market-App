@@ -13,8 +13,9 @@ import com.smarttoolfactory.mymarket.view.adapter.OrderListAdapter
  * [BindingAdapter]s for the [Movie]s to ListAdapter.
  */
 @BindingAdapter("app:items")
-fun setItems(listView: RecyclerView, items: List<OrderListItem>) {
-    println("🔥 MovieListBindings $items")
-    (listView?.adapter as OrderListAdapter)?.submitList(items)
+fun setItems(listView: RecyclerView, items: List<OrderListItem>?) {
+   items?.let {
+       (listView.adapter as OrderListAdapter).submitList(items)
+   }
 }
 

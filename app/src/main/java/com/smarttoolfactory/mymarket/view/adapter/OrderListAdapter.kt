@@ -54,10 +54,10 @@ class OrderListAdapter(private val viewModel: OrdersViewModel) :
  */
 class TaskDiffCallback : DiffUtil.ItemCallback<OrderListItem>() {
     override fun areItemsTheSame(oldItem: OrderListItem, newItem: OrderListItem): Boolean {
-        return oldItem.orderList == newItem.orderList
+        return oldItem.order?.id == newItem.order?.id
     }
 
     override fun areContentsTheSame(oldItem: OrderListItem, newItem: OrderListItem): Boolean {
-        return oldItem.orderList == newItem.orderList
+        return oldItem.order == newItem.order
     }
 }

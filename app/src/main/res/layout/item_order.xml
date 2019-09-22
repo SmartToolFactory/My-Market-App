@@ -19,7 +19,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -29,7 +30,7 @@
             android:text="@{orderItem.date}"
             android:textSize="32sp"
             app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal"
-            app:layout_constraintTop_toTopOf="@+id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="08" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -46,17 +47,15 @@
         <include
             android:id="@+id/layout"
             layout="@layout/layout_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             bind:orderItem="@{orderItem}"
             bind:viewModel="@{viewModel}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvDate"
-            app:layout_constraintTop_toTopOf="@+id/guidelineVertical" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineVertical"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.10" />
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHorizontal"

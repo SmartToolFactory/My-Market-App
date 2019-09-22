@@ -19,11 +19,12 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="12dp"
+            app:items="@{viewModel.items}"
             app:layout_constraintBottom_toTopOf="@+id/buttonMyOrders"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:scrollbars="horizontal"
-            app:items="@{viewModel.items}"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton

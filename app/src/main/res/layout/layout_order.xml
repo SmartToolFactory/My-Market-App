@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="order"
+            name="orderItem"
             type="com.smarttoolfactory.mymarket.data.model.OrderListItem" />
 
 
@@ -18,74 +18,60 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="3dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@color/cardview_dark_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvMarketName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
             android:text="@{orderItem.order.marketName}"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Market 1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@{orderItem.order.orderName}"
-            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="@+id/tvMarketName"
             app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
             tools:text="Sabun" />
 
         <View
             android:id="@+id/view2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="8dp"
             android:background="@color/primary"
             app:layout_constraintStart_toStartOf="@+id/tvMarketName"
             app:layout_constraintTop_toBottomOf="@+id/tvOrderName" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProductState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:text="@{orderItem.order.productState}"
-            android:layout_marginLeft="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
             app:layout_constraintStart_toEndOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/tvOrderName"
+            app:layout_constraintTop_toTopOf="@+id/view2"
             tools:text="Yolda" />
-
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/appCompatImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_next24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvMarketName"
             app:layout_constraintEnd_toEndOf="@+id/tvProductPrice"
-            app:layout_constraintTop_toTopOf="@+id/tvMarketName" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvProductPrice"
@@ -93,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-
+            android:text="@{Double.toString(orderItem.order.productPrice) + ` TL`}"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvOrderName"
@@ -106,9 +92,9 @@
             android:id="@+id/orderDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{orderItem.order.productDetail.orderDetail}"
 
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{orderItem.order.productDetail.orderDetail}"
             app:layout_constraintStart_toStartOf="@+id/tvMarketName"
             app:layout_constraintTop_toBottomOf="@+id/view2"
             tools:text="250 ml sıvı sabun" />
@@ -119,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{Double.toString(orderItem.order.productDetail.summaryPrice) + ` TL`}"
             app:layout_constraintStart_toStartOf="@+id/tvMarketName"
             app:layout_constraintTop_toBottomOf="@+id/orderDetail"
             tools:text="16.8TL" />
