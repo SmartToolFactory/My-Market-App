@@ -20,8 +20,10 @@ class OrderListAdapter(private val viewModel: OrdersViewModel) :
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
         val item = getItem(position)
         holder.bind(viewModel, item)
+
     }
 
 
@@ -33,6 +35,7 @@ class OrderListAdapter(private val viewModel: OrdersViewModel) :
             binding.viewModel = viewModel
             binding.orderItem = item
             binding.executePendingBindings()
+
         }
 
         companion object {

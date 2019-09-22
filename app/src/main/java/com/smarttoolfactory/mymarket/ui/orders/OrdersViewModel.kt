@@ -24,6 +24,7 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
     private val _orderList = MutableLiveData<List<OrderListItem>>()
 
+
     /**
      * Live data that contains order and does not expose _orderList to UI.
      * This liveData is also used for data-binding with list via
@@ -32,7 +33,10 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
      */
     val items: LiveData<List<OrderListItem>> = _orderList
 
+    val expandPosition: MutableLiveData<Int> = MutableLiveData()
+
     init {
+
         getOrderList()
     }
 
@@ -42,7 +46,7 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                    _orderList.value = it
+                _orderList.value = it
 
             }
 
@@ -50,6 +54,19 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
     }
 
+    /**
+     * Show or conceal product details
+     */
+    fun showProductDetails(orderListItem: OrderListItem) {
+
+       var display = orderListItem.order?.isExpanded
+
+        display = (display == false)
+
+        orderListItem.order?.isExpanded = display
+
+        expandPosition.value = orderListItem.id
+    }
 
     override fun onCleared() {
         super.onCleared()

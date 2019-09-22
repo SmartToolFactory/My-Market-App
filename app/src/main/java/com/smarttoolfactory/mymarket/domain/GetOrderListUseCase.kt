@@ -5,8 +5,6 @@ import com.smarttoolfactory.mymarket.data.model.Order
 import com.smarttoolfactory.mymarket.data.model.OrderListItem
 import com.smarttoolfactory.mymarket.data.repository.OrdersRepository
 import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -30,9 +28,13 @@ class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepo
 
                 val orderListItems = mutableListOf<OrderListItem>()
 
+                var id = 0
+
                 it?.forEach {
                     val orderListItem = OrderListItem(it)
+                    orderListItem.id = id
                     orderListItems.add(orderListItem)
+                    id++
                 }
 
                 orderListItems
@@ -44,22 +46,22 @@ class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepo
     }
 
 
-    private fun geMonthName(monthNum: String):String {
-    return    when(monthNum) {
-            "01"-> "Ocak"
-            "02"-> "Şubat"
-            "03"-> "Mart"
-            "04"-> "Nisan"
-            "05"-> "Mayıs"
-            "06"-> "Haziran"
-            "07"-> "Temmuz"
-            "08"-> "Ağustos"
-            "09"-> "Eylül"
-            "10"-> "Ekim"
-            "11"-> "Kasım"
-            "12"-> "Aralık"
-        else -> "Ocak"
-    }
+    private fun geMonthName(monthNum: String): String {
+        return when (monthNum) {
+            "01" -> "Ocak"
+            "02" -> "Şubat"
+            "03" -> "Mart"
+            "04" -> "Nisan"
+            "05" -> "Mayıs"
+            "06" -> "Haziran"
+            "07" -> "Temmuz"
+            "08" -> "Ağustos"
+            "09" -> "Eylül"
+            "10" -> "Ekim"
+            "11" -> "Kasım"
+            "12" -> "Aralık"
+            else -> "Ocak"
+        }
 
     }
 

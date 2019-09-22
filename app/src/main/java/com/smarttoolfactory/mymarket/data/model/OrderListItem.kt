@@ -1,5 +1,7 @@
 package com.smarttoolfactory.mymarket.data.model
 
+import com.smarttoolfactory.mymarket.constants.STATE_WAITING_CONFIRMATION
+
 
 /**
  * Order item that wrapper for [Order] list that is create at same date to display orders in a RecyclerView Adapter
@@ -7,9 +9,12 @@ package com.smarttoolfactory.mymarket.data.model
  */
 class OrderListItem(orderList: Order) {
 
+
     var date: String? = orderList.date
     var month: String? = orderList.month
+    var state: String = STATE_WAITING_CONFIRMATION
     var order: Order? = orderList
+    var id = 0
 
     init {
         month?.apply {
@@ -38,4 +43,6 @@ class OrderListItem(orderList: Order) {
         }
 
     }
+
+
 }

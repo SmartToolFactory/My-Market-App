@@ -1,9 +1,7 @@
 package com.smarttoolfactory.mymarket.ui.orders
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
     private lateinit var ordersViewModel: OrdersViewModel
 
+    private lateinit var orderListAdapter: OrderListAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,16 +26,20 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         dataBinding.viewModel = ordersViewModel
 
-        // Set RecyclerView layout manager, adapter, and scroll listener for infinite scrolling
+        // Set RecyclerView layout manager, and adapter
+        orderListAdapter = OrderListAdapter(ordersViewModel)
         val linearLayoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
         dataBinding.recyclerView.apply {
             this.layoutManager = linearLayoutManager
-            this.adapter = OrderListAdapter(ordersViewModel)
+            // Set RecyclerViewAdapter
+            this.adapter = orderListAdapter
         }
 
         subscribeOrderList()
+        subscribeExpandList()
+
     }
 
 
@@ -47,6 +50,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         ordersViewModel.items.observe(this, Observer {
 
+        })
+    }
+
+    private fun subscribeExpandList() {
+        ordersViewModel.expandPosition.observe(this, Observer {
+            orderListAdapter.notifyItemChanged(it)
         })
     }
 
