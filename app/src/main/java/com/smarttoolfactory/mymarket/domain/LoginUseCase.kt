@@ -1,15 +1,26 @@
 package com.smarttoolfactory.mymarket.domain
 
 import com.smarttoolfactory.mymarket.base.BaseUseCase
+import com.smarttoolfactory.mymarket.constants.MOCK_USER_NAME
+import com.smarttoolfactory.mymarket.constants.MOCK_USER_PASSWORD
+import com.smarttoolfactory.mymarket.data.model.User
+import com.smarttoolfactory.mymarket.data.repository.LoginRepository
 import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
+import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
  * UseCase for logging user in or out
  */
-class LoginUseCase @Inject constructor() : BaseUseCase() {
+class LoginUseCase @Inject constructor(private val loginRepository: LoginRepository) :
+    BaseUseCase() {
 
+
+    fun getRegisteredUser(): Maybe<User> {
+        return loginRepository.getRegisteredUser()
+    }
 
     fun logIn(
         name: String?,
@@ -23,18 +34,34 @@ class LoginUseCase @Inject constructor() : BaseUseCase() {
             isEmpty(name, password)
             -> Single.just(LoginViewModel.AuthenticationState.EMPTY_FIELDS)
 
-            // Authentication is successful
-            isValidPassword(name, password)
-            -> Single.just(LoginViewModel.AuthenticationState.AUTHENTICATED)
-
             // Authentication failed
-            else -> Single.just(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION)
-        }
+            else ->
 
+                loginRepository.getRegisteredUser().flatMapSingle {
+
+                    if (it?.name == name && it?.password == password) {
+
+                        // Fields match with user on database, update user with RememberMe flag
+                        loginRepository.logIn(name, password, rememberMe).flatMapSingle {
+                            Single.just(LoginViewModel.AuthenticationState.AUTHENTICATED)
+                        }
+
+
+                    } else {
+                        Single.just(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION)
+                    }
+
+                }
+        }
     }
 
-    fun logOut(): Single<LoginViewModel.AuthenticationState> {
-        return Single.just(LoginViewModel.AuthenticationState.LOGGED_OUT)
+    /**
+     * Logs out user and deletes register user. But for this assignment 1 user identity is
+     * kept in db for mock
+     */
+    fun logOut(user: User): Maybe<Int> {
+        user.rememberUser = false
+        return loginRepository.logOut(user)
     }
 
     private fun isEmpty(name: String?, password: String?): Boolean {
@@ -42,17 +69,20 @@ class LoginUseCase @Inject constructor() : BaseUseCase() {
                 password == null || password.isEmpty())
     }
 
+
     /**
-     * Get user info from database
+     * Set a mock user for this assignment
      */
-    private fun isValidPassword(name: String?, password: String?): Boolean {
-        return name == "kariyer" && password == "2019ADev"
+    fun registerMockUser() {
+        val user = User(name = MOCK_USER_NAME, password = MOCK_USER_PASSWORD, rememberUser = false)
+        loginRepository.registerUser(user)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe()
     }
 
 
     override fun dispose() {
-
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-
 }

@@ -1,12 +1,20 @@
 package com.smarttoolfactory.mymarket.di
 
 
+import android.app.Application
+import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.smarttoolfactory.mymarket.api.OrdersApi
 import com.smarttoolfactory.mymarket.constants.BASE_URL
+import com.smarttoolfactory.mymarket.constants.DATABASE_NAME
 import com.smarttoolfactory.mymarket.data.OrdersDataSource
+import com.smarttoolfactory.mymarket.data.repository.LoginRepository
+import com.smarttoolfactory.mymarket.data.repository.LoginRepositoryImpl
 import com.smarttoolfactory.mymarket.data.repository.OrdersRepository
 import com.smarttoolfactory.mymarket.data.repository.OrdersRepositoryImpl
+import com.smarttoolfactory.mymarket.data.source.local.AppDatabase
+import com.smarttoolfactory.mymarket.data.source.local.dao.OrdersDao
+import com.smarttoolfactory.mymarket.data.source.local.dao.UsersDao
 import com.smarttoolfactory.mymarket.data.source.remote.RemoteOrdersDataSource
 import dagger.Module
 import dagger.Provides
@@ -43,9 +51,45 @@ class AppModule {
      *** Database Injections ***
     */
 
+    /**
+     * Provide copy of database
+     */
+    @Singleton
+    @Provides
+    fun provideDatabase(application: Application): AppDatabase {
+        return Room.databaseBuilder(
+            application,
+            AppDatabase::class.java,
+            DATABASE_NAME
+        ).build()
+    }
+
+    /**
+     * Provide Data Access Object for querying user table
+     */
+    @Singleton
+    @Provides
+    fun provideUserDao(appDatabase: AppDatabase): UsersDao {
+        return appDatabase.usersDao()
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideOrdersDao(appDatabase: AppDatabase): OrdersDao {
+        return appDatabase.ordersDao()
+    }
+
+
     /*
         *** Repository Injections ***
      */
+
+    @Singleton
+    @Provides
+    fun provideLoginRepository(usersDao: UsersDao): LoginRepository {
+        return LoginRepositoryImpl(usersDao)
+    }
 
     @Singleton
     @Provides

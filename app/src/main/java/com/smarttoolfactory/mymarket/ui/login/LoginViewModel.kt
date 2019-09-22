@@ -2,6 +2,7 @@ package com.smarttoolfactory.mymarket.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.smarttoolfactory.mymarket.data.model.User
 import com.smarttoolfactory.mymarket.domain.LoginUseCase
 import com.smarttoolfactory.mymarket.utils.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -64,6 +65,18 @@ class LoginViewModel @Inject constructor(
         // User is always unauthenticated when MainActivity is launched
 //        authenticationState.value = AuthenticationState.AUTHENTICATED
 
+        val disposable = loginUseCase.getRegisteredUser()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+
+                if (it != null && it.rememberUser == true) {
+                    authenticationState.value = AuthenticationState.AUTHENTICATED
+                }
+            }
+
+        disposables.add(disposable)
+
     }
 
     /**
@@ -77,7 +90,7 @@ class LoginViewModel @Inject constructor(
                 authenticationState.value = it
             },
                 {
-                    authenticationState.value = AuthenticationState.UNAUTHENTICATED
+                    authenticationState.value = AuthenticationState.INVALID_AUTHENTICATION
                 })
 
 
@@ -88,18 +101,32 @@ class LoginViewModel @Inject constructor(
 
     fun logOut() {
 
-        val disposable = loginUseCase.logOut()
+        val disposable = loginUseCase.getRegisteredUser()
+            .flatMap {
+                loginUseCase.logOut(it)
+            }
+
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                authenticationState.value = it
-            },
+
+            .subscribe(
+                {
+                    authenticationState.value = AuthenticationState.LOGGED_OUT
+                },
                 {
                     authenticationState.value = AuthenticationState.LOGGED_OUT
                 })
 
 
+        userName.value = ""
+        userPassword.value = ""
+
+
         disposables.add(disposable)
+    }
+
+    fun mockTestUser() {
+        loginUseCase.registerMockUser()
     }
 
 

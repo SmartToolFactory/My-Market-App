@@ -1,6 +1,7 @@
 package com.smarttoolfactory.mymarket
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.smarttoolfactory.mymarket.api.OrdersApi
+import com.smarttoolfactory.mymarket.constants.IS_FIRST_RUN_KEY
 import com.smarttoolfactory.mymarket.databinding.ActivityMainBinding
 import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
 import dagger.android.support.DaggerAppCompatActivity
@@ -37,6 +39,22 @@ class MainActivity : DaggerAppCompatActivity() {
 
         loginViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val isFirsRun  = sharedPrefs.getBoolean(IS_FIRST_RUN_KEY, true)
+
+
+        // Create mock user first time the app is run
+        if (isFirsRun) {
+            val editor = sharedPrefs.edit()
+
+            // Create a mock user with name = kariyer, password = 2019ADev, remember = false
+            loginViewModel.mockTestUser()
+
+            editor.putBoolean(IS_FIRST_RUN_KEY, false)
+            editor.apply()
+        }
 
 
         bindViews()
@@ -75,7 +93,7 @@ class MainActivity : DaggerAppCompatActivity() {
             when (it) {
 
                 LoginViewModel.AuthenticationState.AUTHENTICATED ->
-                    navController.navigate(R.id.action_loginFragment_to_ordersFragment)
+                    navController.navigate(R.id.orders_dest)
 
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED ->
                     navController.navigate(R.id.nav_graph)

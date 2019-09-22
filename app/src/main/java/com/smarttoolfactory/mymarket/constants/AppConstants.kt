@@ -1,6 +1,8 @@
 package com.smarttoolfactory.mymarket.constants
 
 const val IS_FIRST_RUN_KEY = "IS_FIRST_RUN_KEY"
+const val MOCK_USER_NAME = "kariyer"
+const val MOCK_USER_PASSWORD = "2019ADev"
 
 // Web Service Constants
 const val BASE_URL = "http://kariyertechchallenge.mockable.io/"

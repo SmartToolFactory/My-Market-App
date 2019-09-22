@@ -1,12 +1,10 @@
 package com.smarttoolfactory.mymarket.data.source.local.dao
 
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Update
 import io.reactivex.Completable
+import io.reactivex.Maybe
 
 /**
  * Base Data Access Object interface for generic type T. Contains methods for common functions that does not include
@@ -18,13 +16,12 @@ interface BaseDao<T> {
 
 
     @Insert(onConflict = REPLACE)
-    fun insert(entity: T): Completable
+    fun insert(entity: T): Maybe<Long>
 
     @Update
-    fun update(entity: T): Completable
+    fun update(entity: T): Maybe<Int>
 
     @Delete
-    fun delete(entity: T): Completable
-
+    fun delete(entity: T): Maybe<Int>
 
 }
