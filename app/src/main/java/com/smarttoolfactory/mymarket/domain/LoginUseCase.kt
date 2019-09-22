@@ -17,12 +17,18 @@ class LoginUseCase @Inject constructor() : BaseUseCase() {
         rememberMe: Boolean?
     ): Single<LoginViewModel.AuthenticationState> {
 
-        return if (isEmpty(name, password)) {
-            Single.just(LoginViewModel.AuthenticationState.EMPTY_FIELDS)
-        } else if (isValidPassword(name, password)) {
-            Single.just(LoginViewModel.AuthenticationState.AUTHENTICATED)
-        } else {
-            Single.just(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION)
+        return when {
+
+            // Empty Fields
+            isEmpty(name, password)
+            -> Single.just(LoginViewModel.AuthenticationState.EMPTY_FIELDS)
+
+            // Authentication is successful
+            isValidPassword(name, password)
+            -> Single.just(LoginViewModel.AuthenticationState.AUTHENTICATED)
+
+            // Authentication failed
+            else -> Single.just(LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION)
         }
 
     }

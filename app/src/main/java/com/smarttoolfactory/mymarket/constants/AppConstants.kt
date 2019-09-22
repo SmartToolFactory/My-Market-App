@@ -1,5 +1,6 @@
 package com.smarttoolfactory.mymarket.constants
 
+const val IS_FIRST_RUN_KEY = "IS_FIRST_RUN_KEY"
 
 // Web Service Constants
 const val BASE_URL = "http://kariyertechchallenge.mockable.io/"

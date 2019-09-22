@@ -45,6 +45,9 @@ class LoginViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
+    /**
+     * Authentication state
+     */
     val authenticationState = SingleLiveEvent<AuthenticationState>()
 
     var userName = MutableLiveData<String>()
@@ -57,13 +60,10 @@ class LoginViewModel @Inject constructor(
 
 
     init {
+        rememberMe.value = false
         // User is always unauthenticated when MainActivity is launched
-        authenticationState.value = AuthenticationState.UNAUTHENTICATED
+//        authenticationState.value = AuthenticationState.AUTHENTICATED
 
-    }
-
-    private fun refuseAuthentication() {
-        authenticationState.value = AuthenticationState.UNAUTHENTICATED
     }
 
     /**
@@ -85,8 +85,21 @@ class LoginViewModel @Inject constructor(
 
     }
 
+
     fun logOut() {
-        loginUseCase.logOut()
+
+        val disposable = loginUseCase.logOut()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                authenticationState.value = it
+            },
+                {
+                    authenticationState.value = AuthenticationState.LOGGED_OUT
+                })
+
+
+        disposables.add(disposable)
     }
 
 

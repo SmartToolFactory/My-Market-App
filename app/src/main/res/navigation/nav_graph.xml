@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
@@ -8,19 +9,20 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.smarttoolfactory.mymarket.ui.login.LoginFragment"
+        tools:layout = "@layout/fragment_login"
         android:label="LoginFragment">
 
-        <!-- To go back to clean backstack use app:popUpTo="@id/nav_graph" with -->
+        <!-- To go back to clean back stack use app:popUpTo="@id/nav_graph" with -->
 
         <action
             android:id="@+id/action_loginFragment_to_ordersFragment"
             app:destination="@id/orders_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-
             app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
 
@@ -28,6 +30,7 @@
 
     <fragment
         android:id="@+id/orders_dest"
+        tools:layout = "@layout/fragment_orders"
         android:name="com.smarttoolfactory.mymarket.ui.orders.OrdersFragment"
         android:label="OrdersFragment">
 
@@ -37,7 +40,10 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
 
     </fragment>
 </navigation>

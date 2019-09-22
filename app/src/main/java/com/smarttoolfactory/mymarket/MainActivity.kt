@@ -77,19 +77,18 @@ class MainActivity : DaggerAppCompatActivity() {
                 LoginViewModel.AuthenticationState.AUTHENTICATED ->
                     navController.navigate(R.id.action_loginFragment_to_ordersFragment)
 
-                LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION ->
-                    Toast.makeText(
-                        this,
-                        "Kullanıcı adı veya şifre eşleşmiyor",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED ->
                     navController.navigate(R.id.nav_graph)
 
                 LoginViewModel.AuthenticationState.LOGGED_OUT ->
                     navController.navigate(R.id.action_ordersFragment_to_loginFragment)
 
+                LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION ->
+                    Toast.makeText(
+                        this,
+                        "Kullanıcı adı veya şifre eşleşmiyor",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 else -> Toast.makeText(
                     this,

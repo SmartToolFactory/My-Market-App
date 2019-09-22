@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
-import com.smarttoolfactory.mymarket.data.model.Order
 import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
 import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
 import com.smarttoolfactory.mymarket.view.adapter.OrderListAdapter
@@ -30,6 +28,9 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
 
 
+        dataBinding.loginViewModel = loginViewModel
+
+
         ordersViewModel =
             ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
 
@@ -47,22 +48,20 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             this.adapter = orderListAdapter
         }
 
-        subscribeOrderList()
+//        subscribeOrderList()
         subscribeExpandList()
 
     }
 
 
-
-    /**
-     * Listen changes of [Order]s list of ViewModel. When there are orders display them via [RecyclerView]
-     */
-    private fun subscribeOrderList() {
-
-        ordersViewModel.items.observe(this, Observer {
-
-        })
-    }
+//    /**
+//     * Listen changes of [Order]s list of ViewModel. When there are orders display them via [RecyclerView]
+//     */
+//    private fun subscribeOrderList() {
+//        ordersViewModel.items.observe(this, Observer {
+//
+//        })
+//    }
 
     private fun subscribeExpandList() {
         ordersViewModel.expandPosition.observe(this, Observer {
