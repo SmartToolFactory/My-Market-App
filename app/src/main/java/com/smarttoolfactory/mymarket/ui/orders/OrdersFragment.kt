@@ -1,17 +1,22 @@
-package com.smarttoolfactory.mymarket.orders
+package com.smarttoolfactory.mymarket.ui.orders
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
 import com.smarttoolfactory.mymarket.data.model.Order
 import com.smarttoolfactory.mymarket.databinding.FragmentOrdersBinding
+import com.smarttoolfactory.mymarket.view.adapter.OrderListAdapter
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
     private lateinit var ordersViewModel: OrdersViewModel
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,28 +27,26 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         dataBinding.viewModel = ordersViewModel
 
-        subscribeOrdersList()
+        // Set RecyclerView layout manager, adapter, and scroll listener for infinite scrolling
+        val linearLayoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+        dataBinding.recyclerView.apply {
+            this.layoutManager = linearLayoutManager
+            this.adapter = OrderListAdapter(ordersViewModel)
+        }
+
+        subscribeOrderList()
     }
 
 
     /**
      * Listen changes of [Order]s list of ViewModel. When there are orders display them via [RecyclerView]
      */
-    private fun subscribeOrdersList() {
+    private fun subscribeOrderList() {
 
-        ordersViewModel.ordersList.observe(this, Observer {
-            it?.apply {
+        ordersViewModel.items.observe(this, Observer {
 
-                // TODO Create RecyclerView Adapter do display items
-                val sb = StringBuilder()
-
-                forEach {
-                    sb.append("${it.orderName}\n")
-                }
-
-                dataBinding.tvOrders.text = sb.toString()
-
-            }
         })
     }
 

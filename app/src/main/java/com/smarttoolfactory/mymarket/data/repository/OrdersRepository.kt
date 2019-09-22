@@ -12,17 +12,17 @@ import io.reactivex.Observable
  */
 interface OrdersRepository {
 
-    fun getOrdersList(): Observable<List<Order>>
+    fun getOrderList(): Observable<List<Order>>
 
     /**
      * Saves orders to Room database that retrieved from web service
      */
-    fun saveOrdersListToDb()
+    fun saveOrderListToDb()
 
     /**
      * Clear order list in db to add new orders
      */
-    fun clearOrdersListFromDb()
+    fun clearOrderListFromDb()
 
 
 }

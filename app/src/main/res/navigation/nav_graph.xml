@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.smarttoolfactory.mymarket.login.LoginFragment"
+        android:name="com.smarttoolfactory.mymarket.ui.login.LoginFragment"
         android:label="LoginFragment">
 
         <!-- To go back to clean backstack use app:popUpTo="@id/nav_graph" with -->
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/orders_dest"
-        android:name="com.smarttoolfactory.mymarket.orders.OrdersFragment"
+        android:name="com.smarttoolfactory.mymarket.ui.orders.OrdersFragment"
         android:label="OrdersFragment">
 
         <action

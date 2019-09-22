@@ -1,8 +1,8 @@
 package com.smarttoolfactory.mymarket.di
 
 
-import com.smarttoolfactory.mymarket.login.LoginFragment
-import com.smarttoolfactory.mymarket.orders.OrdersFragment
+import com.smarttoolfactory.mymarket.ui.login.LoginFragment
+import com.smarttoolfactory.mymarket.ui.orders.OrdersFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

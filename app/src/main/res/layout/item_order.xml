@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="orderItem"
+            type="com.smarttoolfactory.mymarket.data.model.OrderListItem" />
+
+
+        <variable
+            name="viewModel"
+            type="com.smarttoolfactory.mymarket.ui.orders.OrdersViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{orderItem.date}"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal"
+            app:layout_constraintTop_toTopOf="@+id/guidelineVertical"
+            tools:text="08" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{orderItem.month}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvDate"
+            app:layout_constraintStart_toStartOf="@+id/guidelineHorizontal"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            tools:text="Ekim" />
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/layout_order"
+            bind:orderItem="@{orderItem}"
+            bind:viewModel="@{viewModel}"
+            app:layout_constraintStart_toEndOf="@+id/tvDate"
+            app:layout_constraintTop_toTopOf="@+id/guidelineVertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineVertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
