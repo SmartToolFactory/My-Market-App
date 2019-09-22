@@ -20,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
+            android:singleLine="true"
             android:text="@string/my_market"
             android:textColor="@color/primary"
-            android:singleLine="true"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,11 +37,12 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_rect_border"
             android:drawableStart="@drawable/ic_perm_identity_24dp"
+            android:drawableLeft="@drawable/ic_lock_24dp"
             android:drawablePadding="4dp"
             android:hint="@string/user_name"
-            android:singleLine="true"
             android:paddingStart="8dp"
             android:paddingLeft="8dp"
+            android:singleLine="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +58,7 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/round_rect_border"
             android:drawableStart="@drawable/ic_lock_24dp"
+            android:drawableLeft="@drawable/ic_lock_24dp"
             android:drawablePadding="4dp"
             android:hint="@string/password"
             android:inputType="textPassword"
@@ -69,16 +71,17 @@
 
 
         <Switch
-            android:id="@+id/switchRememberMe"
+            android:id="@+id/swRememberMe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layoutDirection="rtl"
             android:text="@string/remember_me"
+            android:checked="false"
             app:layout_constraintStart_toStartOf="@+id/etPassword"
             app:layout_constraintTop_toBottomOf="@+id/etPassword"
             app:layout_constraintWidth_percent=".80"
-            app:switchPadding="8dp" />
+            app:switchPadding="18dp" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -92,7 +95,7 @@
             android:textColor="#FFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/switchRememberMe"
+            app:layout_constraintTop_toBottomOf="@+id/swRememberMe"
             app:layout_constraintWidth_percent=".80" />
 
 

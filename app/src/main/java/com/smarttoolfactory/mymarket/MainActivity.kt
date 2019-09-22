@@ -5,16 +5,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.smarttoolfactory.mymarket.api.OrdersApi
 import com.smarttoolfactory.mymarket.databinding.ActivityMainBinding
-import com.smarttoolfactory.mymarket.login.LoginFragment
 import com.smarttoolfactory.mymarket.login.LoginViewModel
 import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var ordersApi: OrdersApi
 
     private lateinit var loginViewModel: LoginViewModel
 
@@ -34,6 +40,15 @@ class MainActivity : DaggerAppCompatActivity() {
         bindViews()
 
         subscribeLoginState()
+
+
+        val disposable = ordersApi.getOrderList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                println("🎃 List $it")
+            }
+
     }
 
     /**
@@ -48,13 +63,6 @@ class MainActivity : DaggerAppCompatActivity() {
         val toolbar = dataBinding.toolbar
         setSupportActionBar(toolbar)
 
-        // Set up Fragment
-        val currentFragment = LoginFragment.newInstance()
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.content_frame, currentFragment)
-            .commit()
 
     }
 
@@ -66,7 +74,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         loginViewModel.authenticationState.observe(this, Observer {
 
-//            when (it) {
+            //            when (it) {
 //                LoginViewModel.AuthenticationState.AUTHENTICATED -> TODO()
 //                LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> TODO()
 //                LoginViewModel.AuthenticationState.UNAUTHENTICATED -> TODO()

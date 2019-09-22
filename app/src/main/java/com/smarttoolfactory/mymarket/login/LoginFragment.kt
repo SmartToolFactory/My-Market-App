@@ -3,6 +3,7 @@ package com.smarttoolfactory.mymarket.login
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
 import com.smarttoolfactory.mymarket.databinding.FragmentLoginBinding
@@ -19,6 +20,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
 
         dataBinding?.viewModel = loginViewModel
+
+        dataBinding!!.buttonLogin!!.setOnClickListener() {
+            findNavController().navigate(R.id.action_loginFragment_to_ordersFragment)
+
+        }
 
     }
 

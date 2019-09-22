@@ -41,7 +41,7 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    protected var dataBinding: T? = null
+    protected lateinit var dataBinding: T
 
     /**
      * Point that contains width and height of the fragment.
@@ -63,12 +63,12 @@ abstract class BaseFragment<T : ViewDataBinding> : DaggerFragment() {
             DataBindingUtil.inflate<T>(inflater, getLayoutId(), container, false)
 
         // 🔥 This is required if LiveData is used for data-binding
-        dataBinding!!.lifecycleOwner = this
+        dataBinding.lifecycleOwner = this
 
-        val rootView = dataBinding?.root
+        val rootView = dataBinding.root
 
         // Get width and height of the fragment
-        rootView?.post {
+        rootView.post {
             dimensions.x = rootView.width
             dimensions.y = rootView.height
         }

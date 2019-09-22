@@ -30,4 +30,5 @@ data class Order(
     @SerializedName("productDetail")
     @Expose
     var productDetail: ProductDetail? = null
+
 ) : Parcelable

@@ -2,6 +2,9 @@ package com.smarttoolfactory.mymarket.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.smarttoolfactory.mymarket.orders.OrdersFragment
+import com.smarttoolfactory.mymarket.utils.SingleLiveEvent
+import io.reactivex.Single
 import javax.inject.Inject
 
 
@@ -29,6 +32,21 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 
 
     val authenticationState = MutableLiveData<AuthenticationState>()
+
+    var userName = MutableLiveData<String>()
+    var userPassword = MutableLiveData<String>()
+
+    /**
+     * Remember users selection
+     */
+    var rememberMe = SingleLiveEvent<Boolean>()
+
+    /**
+     * Event to go [OrdersFragment]. When triggered changes fragment
+     */
+    var goToOrderScreen = SingleLiveEvent<Boolean>()
+
+
     var username: String
 
     init {

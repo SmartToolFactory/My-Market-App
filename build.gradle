@@ -50,6 +50,8 @@ ext {
     recyclerViewVersion = '1.0.0'
     cardVersion = '1.0.0'
 
+    // Navigation Components
+    navigationVersion = '2.2.0-alpha03'
 
     // Coroutines
     coroutinesVersion = '1.2.1'
