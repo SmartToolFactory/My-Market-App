@@ -19,7 +19,17 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|bottom"
+                    android:paddingBottom="4dp"
+                    android:text="@string/my_market"
+                    android:textColor="@color/icons"
+                    android:textSize="18sp" />
+            </androidx.appcompat.widget.Toolbar>
 
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -37,14 +47,13 @@
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:defaultNavHost="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph"/>
-
+                app:navGraph="@navigation/nav_graph" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

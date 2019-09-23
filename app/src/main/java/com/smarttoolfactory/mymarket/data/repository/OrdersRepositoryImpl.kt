@@ -1,8 +1,9 @@
 package com.smarttoolfactory.mymarket.data.repository
 
-import com.smarttoolfactory.mymarket.data.OrdersDataSource
 import com.smarttoolfactory.mymarket.data.model.Order
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -10,21 +11,42 @@ import javax.inject.Inject
  * layer with local, and remote [OrdersDataSource] providers.
  */
 class OrdersRepositoryImpl @Inject constructor(
-    private val webService: OrdersDataSource
-) :
-    OrdersRepository {
-    override fun getOrderList(): Observable<List<Order>> {
-        return webService.getOrderList()
+    private val webService: OrdersDataSource,
+    private val localDataSource: OrdersDataSource
+) : OrdersRepository {
+
+
+    /**
+     * Check database first if there are any saved
+     */
+    override fun getOrderList(): Observable<List<Order>?> {
+
+        return localDataSource
+            .getOrderList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .flatMap {
+                //
+                if (it == null || it.size == 0) {
+                    webService.getOrderList().map {
+                        //  Save orders to database
+                        it?.let {
+                            saveOrderListToDb(it).subscribe()
+                        }
+                        it
+                    }
+                } else {
+                    Observable.just(it)
+                }
+            }
+
+
     }
 
 
-    // TODO Implement database features
-    override fun saveOrderListToDb() {
-
+    override fun saveOrderListToDb(orders: List<Order>): Completable {
+        return localDataSource.saveOrderList(orders)
     }
 
-    override fun clearOrderListFromDb() {
-
-    }
 
 }

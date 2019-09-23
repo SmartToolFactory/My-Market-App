@@ -93,14 +93,18 @@ class MainActivity : DaggerAppCompatActivity() {
             when (it) {
 
                 LoginViewModel.AuthenticationState.AUTHENTICATED ->
+                    // Goes to Orders fragment after animation
                     navController.navigate(R.id.orders_dest)
 
+                // Removed this, NOT USED in this example
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED ->
                     navController.navigate(R.id.nav_graph)
 
+                // User touched log out button in orders fragment
                 LoginViewModel.AuthenticationState.LOGGED_OUT ->
                     navController.navigate(R.id.action_ordersFragment_to_loginFragment)
 
+                // User name or/and password incorrect
                 LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION ->
                     Toast.makeText(
                         this,
@@ -108,9 +112,10 @@ class MainActivity : DaggerAppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                // User name or/and password empty
                 else -> Toast.makeText(
                     this,
-                    "Kullanıcı adı veya şifre alanını boş bırakmayın",
+                    "Kullanıcı adı veya şifre alanını boş bırakmayın!",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -140,9 +145,9 @@ class MainActivity : DaggerAppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.loginFragment) {
-                toolbar?.visibility = View.GONE
+                toolbar.visibility = View.GONE
             } else {
-                toolbar?.visibility = View.VISIBLE
+                toolbar.visibility = View.VISIBLE
             }
         }
     }

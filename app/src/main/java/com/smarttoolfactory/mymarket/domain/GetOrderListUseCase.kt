@@ -13,28 +13,26 @@ import javax.inject.Inject
 class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepository) :
     BaseUseCase() {
 
-    fun getOrderList(): Observable<List<Order>> {
+    fun getOrderList(): Observable<List<Order>?> {
         return repository.getOrderList()
-            .doOnNext {
-                println("🥶 List $it")
-            }
     }
 
 
-    fun getOrderItemList(): Observable<List<OrderListItem>> {
+    fun getOrderItemList(): Observable<List<OrderListItem>?> {
 
         return repository.getOrderList()
             .map {
 
                 val orderListItems = mutableListOf<OrderListItem>()
 
-                var id = 0
-
+                var index = 0
                 it?.forEach {
                     val orderListItem = OrderListItem(it)
-                    orderListItem.id = id
+
+                    orderListItem.id = index
                     orderListItems.add(orderListItem)
-                    id++
+
+                    index++
                 }
 
                 orderListItems

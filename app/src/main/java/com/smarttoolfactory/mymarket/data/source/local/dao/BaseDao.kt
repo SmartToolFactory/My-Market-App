@@ -18,6 +18,7 @@ interface BaseDao<T> {
     @Insert(onConflict = REPLACE)
     fun insert(entity: T): Maybe<Long>
 
+
     @Update
     fun update(entity: T): Maybe<Int>
 

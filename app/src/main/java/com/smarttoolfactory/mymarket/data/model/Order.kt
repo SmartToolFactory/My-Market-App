@@ -1,7 +1,7 @@
 package com.smarttoolfactory.mymarket.data.model
 
 import androidx.room.Entity
-import androidx.room.Ignore
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -9,12 +9,16 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Order data class which contains [ProductDetail]
+ * Indice is set to create uniqie orders to prevent conflicts
  */
 
-@Entity(tableName = "orders")
+@Entity(
+    tableName = "orders",
+    indices = arrayOf(Index(value = ["date", "month", "orderName"], unique = true))
+)
 data class Order(
 
-    @PrimaryKey val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
     @SerializedName("date")
     @Expose

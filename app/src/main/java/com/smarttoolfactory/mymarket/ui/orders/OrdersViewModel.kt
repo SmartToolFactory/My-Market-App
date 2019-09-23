@@ -39,19 +39,37 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
      */
     val expandPosition: SingleLiveEvent<Int> = SingleLiveEvent()
 
+    /**
+     * Loading indicator to show used fetch progress is going on
+     */
+    val loading = SingleLiveEvent<Boolean>()
+
 
     init {
+
+        loading.value = false
 
         getOrderList()
     }
 
     private fun getOrderList() {
 
+        loading.postValue(true)
+
         val disposable = getOrdersUseCase.getOrderItemList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+
+            .doOnError {
+                loading.postValue(false)
+            }
+            .doOnNext {
+                loading.postValue(false)
+            }
             .subscribe {
-                _orderList.value = it
+                it?.let {
+                    _orderList.value = it
+                }
 
             }
 
@@ -68,7 +86,6 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
 
         expandPosition.value = orderListItem.id
     }
-
 
 
     override fun onCleared() {

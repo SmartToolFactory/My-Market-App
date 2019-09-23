@@ -18,7 +18,7 @@ interface OrdersApi {
      * https://stackoverflow.com/questions/40062564/retrofit-error-missing-either-get-url-or-url-parameter
      */
     @GET(".")
-    fun getOrderList(): Observable<List<Order>>
+    fun getOrderList(): Observable<List<Order>?>
 
 
 }

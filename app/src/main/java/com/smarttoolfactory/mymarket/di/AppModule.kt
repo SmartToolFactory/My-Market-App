@@ -7,12 +7,9 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.smarttoolfactory.mymarket.api.OrdersApi
 import com.smarttoolfactory.mymarket.constants.BASE_URL
 import com.smarttoolfactory.mymarket.constants.DATABASE_NAME
-import com.smarttoolfactory.mymarket.data.OrdersDataSource
-import com.smarttoolfactory.mymarket.data.repository.LoginRepository
-import com.smarttoolfactory.mymarket.data.repository.LoginRepositoryImpl
-import com.smarttoolfactory.mymarket.data.repository.OrdersRepository
-import com.smarttoolfactory.mymarket.data.repository.OrdersRepositoryImpl
+import com.smarttoolfactory.mymarket.data.repository.*
 import com.smarttoolfactory.mymarket.data.source.local.AppDatabase
+import com.smarttoolfactory.mymarket.data.source.local.LocalOrdersDataSource
 import com.smarttoolfactory.mymarket.data.source.local.dao.OrdersDao
 import com.smarttoolfactory.mymarket.data.source.local.dao.UsersDao
 import com.smarttoolfactory.mymarket.data.source.remote.RemoteOrdersDataSource
@@ -20,6 +17,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -42,7 +40,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesOrdersDataSource(ordersApi: OrdersApi): OrdersDataSource {
+    @Named("remote")
+    fun providesRemoteOrdersDataSource(ordersApi: OrdersApi): OrdersDataSource {
         return RemoteOrdersDataSource(ordersApi)
     }
 
@@ -80,6 +79,12 @@ class AppModule {
         return appDatabase.ordersDao()
     }
 
+    @Singleton
+    @Provides
+    @Named("local")
+    fun providesLocalOrdersDataSource(ordersDao: OrdersDao): OrdersDataSource {
+        return LocalOrdersDataSource(ordersDao)
+    }
 
     /*
         *** Repository Injections ***
@@ -93,8 +98,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOrdersRepository(webService: OrdersDataSource): OrdersRepository {
-        return OrdersRepositoryImpl(webService)
+    fun provideOrdersRepository(@Named("remote") webService: OrdersDataSource, @Named("local") localOrdersDataSource: OrdersDataSource): OrdersRepository {
+        return OrdersRepositoryImpl(webService, localOrdersDataSource)
     }
 
 

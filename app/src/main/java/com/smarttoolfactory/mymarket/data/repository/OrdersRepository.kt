@@ -1,6 +1,7 @@
 package com.smarttoolfactory.mymarket.data.repository
 
 import com.smarttoolfactory.mymarket.data.model.Order
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 //
@@ -12,17 +13,17 @@ import io.reactivex.Observable
  */
 interface OrdersRepository {
 
-    fun getOrderList(): Observable<List<Order>>
+    fun getOrderList(): Observable<List<Order>?>
 
     /**
      * Saves orders to Room database that retrieved from web service
      */
-    fun saveOrderListToDb()
+    fun saveOrderListToDb(orders: List<Order>): Completable
 
-    /**
-     * Clear order list in db to add new orders
-     */
-    fun clearOrderListFromDb()
+//    /**
+//     * Clear order list in db to add new orders
+//     */
+//    fun clearOrderListFromDb()
 
 
 }
