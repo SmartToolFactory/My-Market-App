@@ -25,14 +25,13 @@ class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepo
 
                 val orderListItems = mutableListOf<OrderListItem>()
 
-                var index = 0
-                it?.forEach {
-                    val orderListItem = OrderListItem(it)
+                it?.forEachIndexed { index, order ->
+
+                    val orderListItem = OrderListItem(order)
 
                     orderListItem.id = index
                     orderListItems.add(orderListItem)
 
-                    index++
                 }
 
                 orderListItems
@@ -57,8 +56,7 @@ class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepo
             "09" -> "Eylül"
             "10" -> "Ekim"
             "11" -> "Kasım"
-            "12" -> "Aralık"
-            else -> "Ocak"
+            else -> "Aralık"
         }
 
     }

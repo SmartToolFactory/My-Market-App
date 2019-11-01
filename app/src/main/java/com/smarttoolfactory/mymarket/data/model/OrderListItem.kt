@@ -39,8 +39,7 @@ class OrderListItem(orderList: Order) {
             "09" -> "Eylül"
             "10" -> "Ekim"
             "11" -> "Kasım"
-            "12" -> "Aralık"
-            else -> "Ocak"
+            else -> "Aralık"
         }
 
     }

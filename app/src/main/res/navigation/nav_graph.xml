@@ -2,48 +2,62 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/login_dest">
 
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/login_dest"
         android:name="com.smarttoolfactory.mymarket.ui.login.LoginFragment"
-        tools:layout = "@layout/fragment_login"
-        android:label="LoginFragment">
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
 
-        <!-- To go back to clean back stack use app:popUpTo="@id/nav_graph" with -->
+        <!--
+            🔥🔥🔥
+            popUpTo clean back stack until the name with id
+            if stack consists of
+            A->B->C->D and fragment C calls popUpTo="A" then back stack is cleaned up to C,
+            if C calls popUTo="C" or "D" nothing happens since there is no C or D fragment
+            in back stack yet.
+         -->
 
         <action
             android:id="@+id/action_loginFragment_to_ordersFragment"
             app:destination="@id/orders_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:launchSingleTop="true"
             app:popEnterAnim="@anim/slide_in_left"
-
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/nav_graph"
+
+            app:popUpTo="@id/login_dest"
             app:popUpToInclusive="true" />
+
+        <!-- popUpTo="@id/login_dest" or popUpTo="@id/main_navigation" will remove the LoginFragment
+        from back stack
+
+        -->
+
 
     </fragment>
 
     <fragment
         android:id="@+id/orders_dest"
-        tools:layout = "@layout/fragment_orders"
         android:name="com.smarttoolfactory.mymarket.ui.orders.OrdersFragment"
-        android:label="OrdersFragment">
+        android:label="OrdersFragment"
+        tools:layout="@layout/fragment_orders">
 
         <action
             android:id="@+id/action_ordersFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            app:destination="@id/login_dest"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
 
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/main_navigation"
             app:popUpToInclusive="true" />
+
 
     </fragment>
 </navigation>

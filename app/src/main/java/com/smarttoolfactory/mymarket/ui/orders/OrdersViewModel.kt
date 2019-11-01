@@ -66,12 +66,16 @@ class OrdersViewModel @Inject constructor(private val getOrdersUseCase: GetOrder
             .doOnNext {
                 loading.postValue(false)
             }
-            .subscribe {
+            .subscribe({
+
                 it?.let {
                     _orderList.value = it
                 }
 
-            }
+
+            },{
+                println("OrdersViewModel getOrderList() onError() ${it.message}")
+            })
 
         disposables.add(disposable)
 

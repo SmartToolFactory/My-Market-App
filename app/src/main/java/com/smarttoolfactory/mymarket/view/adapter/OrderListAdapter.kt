@@ -5,41 +5,78 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.smarttoolfactory.mymarket.BR
 import com.smarttoolfactory.mymarket.data.model.OrderListItem
 import com.smarttoolfactory.mymarket.databinding.ItemOrderBinding
 import com.smarttoolfactory.mymarket.ui.orders.OrdersViewModel
 
 /**
- * Adapter for the movie list. Has a reference to the [OrdersViewModel] to send actions back to it.
+ * Adapter for the order list. Has a reference to the [OrdersViewModel] to send actions back to it.
+ *
+ * Layout of the rows is determined by type of the binding class. For this adapter it's [ItemOrderBinding]
+ * which is retrieved from item_order.xml
  */
 class OrderListAdapter(private val viewModel: OrdersViewModel) :
-    ListAdapter<OrderListItem, OrderListAdapter.CustomViewHolder>(TaskDiffCallback()) {
+    ListAdapter<OrderListItem, OrderListAdapter.CustomViewHolder<OrderListItem>>(TaskDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+    var itemList = listOf<OrderListItem>()
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CustomViewHolder<OrderListItem> {
         return CustomViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder<OrderListItem>, position: Int) {
 
         val item = getItem(position)
-        holder.bind(viewModel, item)
+
+        holder.bind(viewModel, item) { from, to ->
+            notifyItemMoved(from, to)
+        }
+
+
+    }
+
+    override fun onCurrentListChanged(
+        previousList: MutableList<OrderListItem>,
+        currentList: MutableList<OrderListItem>
+    ) {
+        super.onCurrentListChanged(previousList, currentList)
+
+        itemList = currentList
 
     }
 
 
-    class CustomViewHolder private constructor(val binding: ItemOrderBinding) :
+    // 🔥🔥🔥 item_order.xml is bounded as ItemOrderBinding
+    class CustomViewHolder<T> private constructor(val binding: ItemOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: OrdersViewModel, item: OrderListItem) {
+        fun bind(
+            viewModel: OrdersViewModel,
+            item: T,
+            action: (from: Int, to: Int) -> Unit
+        ) {
+
+
+            binding.root.setOnClickListener {
+                action(adapterPosition, 0)
+
+            }
 
             binding.viewModel = viewModel
-            binding.orderItem = item
+            // Sets the OrderItem of the layout of row of the Adapter
+//            binding.orderItem = item as OrderListItem
+            binding.setVariable(BR.orderItem, item)
             binding.executePendingBindings()
+
 
         }
 
         companion object {
-            fun from(parent: ViewGroup): CustomViewHolder {
+            fun from(parent: ViewGroup): CustomViewHolder<OrderListItem> {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ItemOrderBinding.inflate(layoutInflater, parent, false)
 

@@ -1,7 +1,6 @@
 package com.smarttoolfactory.mymarket
 
 import com.smarttoolfactory.mymarket.di.DaggerAppComponent
-import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 

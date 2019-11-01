@@ -1,10 +1,13 @@
 package com.smarttoolfactory.mymarket
 
+import android.content.Context
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,8 +26,6 @@ class MainActivity : DaggerAppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var ordersApi: OrdersApi
 
     private lateinit var loginViewModel: LoginViewModel
 
@@ -38,7 +39,7 @@ class MainActivity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         loginViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -98,7 +99,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
                 // Removed this, NOT USED in this example
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED ->
-                    navController.navigate(R.id.nav_graph)
+                    navController.navigate(R.id.main_navigation)
 
                 // User touched log out button in orders fragment
                 LoginViewModel.AuthenticationState.LOGGED_OUT ->
@@ -142,9 +143,8 @@ class MainActivity : DaggerAppCompatActivity() {
      */
     private fun listenForNavigationEvents(navController: NavController, toolbar: Toolbar) {
 
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.loginFragment) {
+            if (destination.id == R.id.login_dest) {
                 toolbar.visibility = View.GONE
             } else {
                 toolbar.visibility = View.VISIBLE
