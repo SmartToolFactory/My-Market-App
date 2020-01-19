@@ -3,7 +3,6 @@ package com.smarttoolfactory.mymarket.ui.login
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
 import com.smarttoolfactory.mymarket.databinding.FragmentLoginBinding

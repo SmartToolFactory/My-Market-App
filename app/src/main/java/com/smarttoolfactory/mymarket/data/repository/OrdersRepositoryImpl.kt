@@ -25,18 +25,16 @@ class OrdersRepositoryImpl @Inject constructor(
             .getOrderList()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
-            .flatMap {
+            .flatMap { list ->
                 //
-                if ( it.isEmpty()) {
-                    webService.getOrderList()?.map {
+                if (list.isEmpty()) {
+                    webService.getOrderList().flatMap {
                         //  Save orders to database
-                        it?.let {
-                            saveOrderListToDb(it).subscribe()
-                        }
-                        it
+                        saveOrderListToDb(it).andThen(Observable.just(list))
+
                     }
                 } else {
-                    Observable.just(it)
+                    Observable.just(list)
                 }
             }
 

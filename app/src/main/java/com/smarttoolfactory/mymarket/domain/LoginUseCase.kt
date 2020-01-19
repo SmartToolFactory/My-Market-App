@@ -39,7 +39,7 @@ class LoginUseCase @Inject constructor(private val loginRepository: LoginReposit
 
                 loginRepository.getRegisteredUser().flatMapSingle {
 
-                    if (it?.name == name && it?.password == password) {
+                    if (it.name == name && it.password == password) {
 
                         // Fields match with user on database, update user with RememberMe flag
                         loginRepository.logIn(name, password, rememberMe).flatMapSingle {

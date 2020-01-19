@@ -25,7 +25,7 @@ class GetOrderListUseCase @Inject constructor(private val repository: OrdersRepo
 
                 val orderListItems = mutableListOf<OrderListItem>()
 
-                it?.forEachIndexed { index, order ->
+                it.forEachIndexed { index, order ->
 
                     val orderListItem = OrderListItem(order)
 

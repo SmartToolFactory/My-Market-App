@@ -66,7 +66,8 @@ class OrderListAdapter(private val viewModel: OrdersViewModel) :
 
             }
 
-            binding.viewModel = viewModel
+//            binding.viewModel = viewModel
+            binding.setVariable(BR.viewModel, viewModel)
             // Sets the OrderItem of the layout of row of the Adapter
 //            binding.orderItem = item as OrderListItem
             binding.setVariable(BR.orderItem, item)

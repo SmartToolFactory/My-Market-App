@@ -3,8 +3,7 @@ package com.smarttoolfactory.mymarket.ui.orders
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smarttoolfactory.mymarket.R
 import com.smarttoolfactory.mymarket.base.BaseFragment
@@ -26,14 +25,14 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
 
         // LoginViewModel is reqired to log out when user touches log out button
         loginViewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(LoginViewModel::class.java)
+            ViewModelProvider(activity!!, viewModelFactory).get(LoginViewModel::class.java)
 
 
         dataBinding.loginViewModel = loginViewModel
 
 
         ordersViewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
+            ViewModelProvider(activity!!, viewModelFactory).get(OrdersViewModel::class.java)
 
         dataBinding.viewModel = ordersViewModel
 

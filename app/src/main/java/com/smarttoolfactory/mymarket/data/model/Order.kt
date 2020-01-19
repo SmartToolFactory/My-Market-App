@@ -9,12 +9,12 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Order data class which contains [ProductDetail]
- * Indice is set to create uniqie orders to prevent conflicts
+ * Indice is set to create unique orders to prevent conflicts
  */
 
 @Entity(
     tableName = "orders",
-    indices = arrayOf(Index(value = ["date", "month", "orderName"], unique = true))
+    indices = [Index(value = ["date", "month", "orderName"], unique = true)]
 )
 data class Order(
 

@@ -1,20 +1,15 @@
 package com.smarttoolfactory.mymarket
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.smarttoolfactory.mymarket.api.OrdersApi
 import com.smarttoolfactory.mymarket.constants.IS_FIRST_RUN_KEY
 import com.smarttoolfactory.mymarket.databinding.ActivityMainBinding
 import com.smarttoolfactory.mymarket.ui.login.LoginViewModel
@@ -43,7 +38,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val isFirsRun  = sharedPrefs.getBoolean(IS_FIRST_RUN_KEY, true)
+        val isFirsRun = sharedPrefs.getBoolean(IS_FIRST_RUN_KEY, true)
 
 
         // Create mock user first time the app is run
